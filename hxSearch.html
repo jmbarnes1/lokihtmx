@@ -1,0 +1,95 @@
+<nav id="breadCrumbContainer" hx-swap-oob="true">
+    <span class="text-black pointer"
+        title="ALL DATABASES"
+        hx-get="hxList.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-house"></i>
+        HOME
+    </span>
+    <em>|</em>
+    <span class="text-black pointer"
+        title="COLLECTIONS"
+        hx-get="hxDBPortal.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-database"></i>
+        DATABASE PORTAL:   <span id="sDataBaseName" class="dbName badge text-bg-primary text-uppercase fst-italic "></span>
+    </span>
+    <em>|</em>
+    <span class="pointer" 
+        title="FIELDS"
+        hx-get="hxCollectionPortal.html" 
+        hx-target="#collectionPortalContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-collection"></i>
+        COLLECTION PORTAL:  <span class="collectionName badge text-bg-primary text-uppercase fst-italic "></span>
+    </span>
+</nav>
+
+<div class="row">
+    <div class="col-4">
+        <div id="searchListGroup" class="list-group list-group-flush"></div>
+    </div>
+    <div class="col-8">
+        <label for="searchField" class="form-label">FIELD</label>
+        <input type="text" 
+            name="searchField" 
+            id="searchField" 
+            class="form-control"
+            value=""
+            readonly>
+        <hr />
+        <label for="searchOperator" class="form-label">OPERATION</label>
+        <select name="searchOperator" id="searchOperator" class="form-select" required>
+            <option value=""> -- </option>
+            <option value="$eq">EQUALITY - STRICT</option>
+            <option value="$aeq">EQUALITY - ABSTRACT</option>
+            <option value="$ne">NOT EQUAL</option>
+            <option value="$dteq">DATE EQUAL</option>
+            <option value="$gt">GREATER THAN</option>
+            <option value="$gte">GREATER THAN OR EQUAL TO</option>
+            <option value="$lt">LESS THAN</option>
+            <option value="$lte">LESS THAN OR EQUAL TO</option>
+            <option value="$between">BETWEEN</option>
+            <option value="$jgt">JAVASCRIPT GREATER THAN</option>
+            <option value="$jgte">JAVASCRIPT GREATER THAN OR EQUAL TO</option>
+            <option value="$jlt">JAVASCRIPT LESS THAN</option>
+            <option value="$jlte">JAVASCRIPT LESS THAN OR EQUAL TO</option>
+            <option value="$jbetween">JAVASCRIPT BETWEEN</option>
+        </select>
+        <hr />
+        <label for="searchValue" class="form-label">VALUE</label>
+        <input type="text" 
+            name="searchValue" 
+            id="searchValue" 
+            class="form-control"
+            value="" 
+            autocomplete="off">
+        <hr />
+        <button type="button" 
+            name="searchButton" 
+            id="searchButton"
+            class="btn btn-sm btn-success w-100"
+            data-action="dataSearch">
+            <i class="bi bi-search"></i>
+            SEARCH
+        </button>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-12">
+        <span id="exportFilteredDataButton" 
+            class="float-end btn btn-primary m-2"
+            data-action="exportFilteredCSV"
+            data-filename="">
+            <i class="bi bi-filetype-csv"></i>
+            EXPORT RESULTS
+        </span>
+        <div id="holdSearch"></div>
+    </div>
+</div>

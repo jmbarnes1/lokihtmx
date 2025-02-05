@@ -1,0 +1,36 @@
+<nav id="breadCrumbContainer" hx-swap-oob="true">
+    <span class="text-black pointer"
+        title="ALL DATABASES"
+        hx-get="hxList.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-house"></i>
+        HOME
+    </span>
+    <em>|</em>
+    <i class="bi bi-database"></i>
+    NEW DATABASE PROFILE
+</nav>
+
+<div class="card" id="databaseProfileContainer">
+    <div class="card-header fw-bold bg-primary text-white">PROFILE</div>
+    <div class="card-body">
+        <label for="databaseNameInput" class="control-label">NAME</label>
+        <input type="text" 
+            name="databaseNameInput" 
+            id="databaseNameInput" 
+            value=""
+            class="form-control"
+            autocomplete="off">
+    </div>
+    <div class="card-footer">
+        <button type="button" 
+            name="saveDatabaseButton" 
+            id="saveDatabaseButton" 
+            class="btn btn-success float-end"
+            data-action="saveDatabase">
+            SAVE
+        </button>
+    </div>
+</fieldset>

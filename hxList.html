@@ -1,0 +1,34 @@
+<nav id="breadCrumbContainer" hx-swap-oob="true">
+    <span class="text-black pointer"
+        title="ALL DATABASES"
+        hx-get="hxList.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-house"></i>
+        HOME
+    </span>
+</nav>
+
+<div class="row">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                DATABASES
+            </div>
+            <div id="databaseListContainer" class="list-group list-group-flush"></div>
+        </div>
+    </div>
+    <div class="col-3">
+        <nav class="list-group">
+            <span class="list-group-item pointer" 
+                hx-get="hxDBProfile.html" 
+                hx-target="#mainContentContainer" 
+                hx-swap="innerHTML" 
+                hx-trigger="click">
+                <i class="bi bi-plus-square-fill"></i>
+                NEW DATABASE
+            </span>
+        </nav>
+    </div>
+</div>

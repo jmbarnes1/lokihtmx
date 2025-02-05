@@ -1,0 +1,39 @@
+<pre>
+//Initialize LokiJS
+const db = new loki
+(
+    'example.db', 
+    {
+        autosave: true,
+        autosaveInterval: 1000, // Auto-save every 1 second
+        persistenceMethod: 'localStorage' // Save to localStorage
+    }
+);
+    
+
+//New database.
+var db = new loki('sandbox.db');
+
+//New collection.
+var items = db.addCollection('items');
+
+//Insert new document.
+items.insert({ name : 'mjolnir', owner: 'thor', maker: 'dwarves' });
+
+//Update
+let lokiDoc = lokiCollection.by("$loki", '1')
+        
+lokiDoc[fieldName.value] = null;
+
+lokiCollection.update(lokiDoc);
+lokiDatabase.saveDatabase();
+
+//Rename
+db.renameCollection(oldName, newName);
+
+//Chain
+lokiCollection.chain().find().data().forEach
+
+//These return the same thing.
+lokiCollection.data <=> lokiCollection.chain().data()
+</pre>

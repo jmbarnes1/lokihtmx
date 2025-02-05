@@ -1,0 +1,56 @@
+<nav id="breadCrumbContainer" hx-swap-oob="true">
+    <span class="text-black pointer"
+        title="ALL DATABASES"
+        hx-get="hxList.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-house"></i>
+        HOME
+    </span>
+    <em>|</em>
+    <span class="text-black pointer"
+        title="COLLECTIONS"
+        hx-get="hxDBPortal.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-database"></i>
+        DATABASE PORTAL:   <span id="sDataBaseName" class="dbName badge text-bg-primary text-uppercase fst-italic "></span>
+    </span>
+    <em>|</em>
+    <i class="bi bi-collection"></i>
+    NEW COLLECTION PROFILE
+</nav>
+
+<div class="card">
+    <div class="card-header bg-primary fw-bold text-white">
+        COLLECTION
+    </div>
+    <div id="collectionContainer" class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <label for="collectionNameInput" class="control-label">NAME</label>
+            </div>
+        </div>
+        <div class="row pb-3">
+            <div class="col-12">
+                <input type="text" 
+                    name="collectionNameInput" 
+                    id="collectionNameInput" 
+                    value=""
+                    class="form-control"
+                    autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" 
+            name="saveCollectionButton" 
+            id="saveCollectionButton" 
+            class="btn btn-success float-end"
+            data-action="addCollection">
+            SAVE
+        </button>
+    </div>
+</div>

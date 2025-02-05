@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="../library/bootstrap/bootstrap-icons-1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../library/bootstrap/bootstrap_5_3_3/css/bootstrap.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+  
+  <script src="../library/lokijs/lokijs.1.5/lokijs.js" defer></script>
+  <script src="../library/htmx/htmx.2.0/htmx.min.js" defer></script>
+  <script src="../library/bootstrap/bootstrap_5_3_3/js/bootstrap.bundle.min.js" defer></script>
+  <script src="main.js" type="module" defer></script>
+</head>
+
+<body>
+  <div class="row p-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="bg-primary card-header text-white">
+          <strong>LOKIJS / HTMX</strong>
+        </div>
+        <div class="card-body">
+          
+          <div class="row">
+            <div class="col-12 ms-3 mt-1">
+              <nav id="breadCrumbContainer">
+                <span class="text-black pointer"
+                    title="ALL DATABASES"
+                    hx-get="hxList.html" 
+                    hx-target="#mainContentContainer" 
+                    hx-swap="innerHTML" 
+                    hx-trigger="click">
+                    <i class="bi bi-house"></i>
+                    HOME
+                </span>
+              </nav>
+            </div>
+          </div>
+
+           <hr />
+
+          <div id="mainContentContainer" 
+            hx-get="hxList.html" 
+            hx-target="#mainContentContainer" 
+            hx-swap="innerHTML" 
+            hx-trigger="load">
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div id="universalModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="universalModalTitle"></h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="universalModalBody"></div>
+            <div class="modal-footer" id="universalModalFooter"></div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

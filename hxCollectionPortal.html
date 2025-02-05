@@ -1,0 +1,97 @@
+<nav id="breadCrumbContainer" hx-swap-oob="true">
+    <span class="text-black pointer"
+        title="ALL DATABASES"
+        hx-get="hxList.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-house"></i>
+        HOME
+    </span>
+    <em>|</em>
+    <span class="text-black pointer"
+        title="COLLECTIONS"
+        hx-get="hxDBPortal.html" 
+        hx-target="#mainContentContainer" 
+        hx-swap="innerHTML" 
+        hx-trigger="click">
+        <i class="bi bi-database"></i>
+        DATABASE PORTAL:   <span id="sDataBaseName" class="dbName badge text-bg-primary text-uppercase fst-italic "></span>
+    </span>
+    <em>|</em>
+    <span title="FIELDS">
+        <i class="bi bi-collection"></i>
+        COLLECTION PORTAL:  <span class="collectionName badge text-bg-primary text-uppercase fst-italic "></span>
+    </span>
+</nav>
+
+<div class="row">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-header bg-primary text-white fw-bold" 
+                hx-get="hxViewData.html"
+                hx-target="#collectionPortalContainer"
+                hx-swap="innerHTML" 
+                hx-trigger="load">
+                COLLECTION:  <span class="text-uppercase fst-italic collectionName"></span>
+            </div>
+            <div id="collectionPortalContainer" class="card-body"></div>
+        </div>
+    </div>
+    <div class="col-3">
+        <nav class="list-group">
+            <span id="viewDataButton" 
+                class="list-group-item pointer"
+                hx-get="hxViewData.html" 
+                hx-target="#collectionPortalContainer"
+                hx-swap="innerHTML" 
+                hx-trigger="click">
+                <i class="bi bi-table"></i>
+                VIEW DATA FOR <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span id="newDocumentButton" 
+                class="list-group-item pointer"
+                data-action="addDocumentModal">
+                <i class="bi bi-pencil-square"></i>
+                NEW DOCUMENT FOR <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span id="searchDocument"
+                class="list-group-item pointer"
+                hx-get="hxSearch.html" 
+                hx-target="#collectionPortalContainer" 
+                hx-swap="innerHTML" 
+                hx-trigger="click">
+                <i class="bi bi-search"></i>
+                SEARCH FOR <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span id="exportDocument" 
+                class="list-group-item pointer" 
+                data-action="exportDocumentCSV"
+                title="CSV">
+                <i class="bi bi-filetype-csv"></i>
+                EXPORT COLLECTION <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span class="list-group-item p-0 m-0 list-group-item-dark"></span>
+            <span id="viewFieldsButton" 
+                class="list-group-item pointer"
+                hx-get="hxViewFields.html" 
+                hx-target="#collectionPortalContainer"
+                hx-swap="innerHTML" 
+                hx-trigger="click">
+                <i class="bi bi-list"></i>
+                VIEW FIELDS FOR <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span class="list-group-item pointer"
+                data-action="addFieldModal">
+                <i class="bi bi-plus-square-fill"></i>
+                ADD FIELD TO <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+            <span id="deleteCollectionButton" 
+                class="list-group-item list-group-item-danger pointer small"
+                data-action="deleteCollection">
+                <i class="bi bi-trash"></i>
+                DELETE THE COLLECTION <span class="text-uppercase fst-italic collectionName"></span>
+            </span>
+        </nav>
+    </div>
+</div>
