@@ -1,6 +1,6 @@
 # LokiHTMX
 
-<!--- ![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png)  --->
+<!--- ![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png) --->  
 *A lightweight HTMX-based web project powered by LokiJS.*
 
 ## Overview
@@ -9,8 +9,10 @@ LokiHTMX is a client-side application that leverages **HTMX** and **LokiJS** to 
 ## Features
 - **HTMX-powered UI updates** – No need for full-page reloads
 - **LokiJS integration** – A fast, in-memory JavaScript database
+- **Persistent Data Storage** – Data is stored in the browser's **localStorage**, ensuring it remains intact across sessions
 - **Lightweight & efficient** – Minimal external dependencies
 - **Easy to extend** – Customize for various use cases
+- **Offline-first capability** – Works even when the user is offline
 
 ## Live Demo
 [Check it out here](https://jmbarnes1.github.io/lokihtmx/)
@@ -31,7 +33,8 @@ Since LokiHTMX is a frontend-only project, there are no additional setup steps b
 ## Usage
 1. Open `index.html` in your preferred web browser.
 2. Interact with the dynamic UI elements powered by HTMX and LokiJS.
-3. Modify the project to fit your needs by editing the HTML, JS, or CSS files.
+3. Data entered is **persistently stored in localStorage**, so it remains available even after closing and reopening the browser.
+4. Modify the project to fit your needs by editing the HTML, JS, or CSS files.
 
 ## Contributing
 We welcome contributions! To contribute:
