@@ -12,10 +12,9 @@ LokiHTMX is a client-side application that leverages **HTMX** and **LokiJS** to 
 - **Persistent Data Storage** – Data is stored in the browser's **localStorage**, ensuring it remains intact across sessions
 - **Lightweight & efficient** – Minimal external dependencies
 - **Easy to extend** – Customize for various use cases
-- **Offline-first capability** – Works even when the user is offline
 
 ## Live Demo
-[Check it out here](https://jmbarnes1.github.io/lokihtmx/)
+[here](https://jmbarnes1.github.io/lokihtmx/)
 
 ## Installation
 To run LokiHTMX locally:
