@@ -1,6 +1,6 @@
 # LokiHTMX
 
-![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png)  
+<!--- ![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png)  --->
 *A lightweight HTMX-based web project powered by LokiJS.*
 
 ## Overview
