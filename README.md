@@ -1,6 +1,7 @@
 # LokiHTMX
 
-![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/lokijs.webp)  
+  
+<img src="https://jmbarnes1.github.io/lokihtmx/lokijs.webp" alt="LokiHTMX" width="200">
 *A lightweight HTMX-based web project powered by LokiJS.*
 
 ## Overview
