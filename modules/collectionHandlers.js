@@ -1,5 +1,5 @@
 import {appState } from "./state.js";
-import {userConfirm, focusAndSelectElement } from "./utils.js";
+import {userConfirm, showModal, focusAndSelectElement } from "./utils.js";
 
 
 export function handleDeleteCollection(event, element) {
