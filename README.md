@@ -1,6 +1,6 @@
 # LokiHTMX
 
-<!--- ![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png) --->  
+![LokiHTMX](https://jmbarnes1.github.io/lokihtmx/logo.png)  
 *A lightweight HTMX-based web project powered by LokiJS.*
 
 ## Overview
@@ -12,9 +12,10 @@ LokiHTMX is a client-side application that leverages **HTMX** and **LokiJS** to 
 - **Persistent Data Storage** – Data is stored in the browser's **localStorage**, ensuring it remains intact across sessions
 - **Lightweight & efficient** – Minimal external dependencies
 - **Easy to extend** – Customize for various use cases
+- **Offline-first capability (with limitations)** – Data persists offline, but HTMX requests may require a local server
 
 ## Live Demo
-[here](https://jmbarnes1.github.io/lokihtmx/)
+[Check it out here](https://jmbarnes1.github.io/lokihtmx/)
 
 ## Installation
 To run LokiHTMX locally:
@@ -28,6 +29,31 @@ cd lokihtmx
 ```
 
 Since LokiHTMX is a frontend-only project, there are no additional setup steps beyond opening the `index.html` file.
+
+## Running Locally
+To run LokiHTMX on your local machine, you need a simple web server. If you open `index.html` directly (using `file://`), some HTMX features may not work as expected.
+
+### **Option 1: Using Something like Simple Web Server **
+If you're on Windows, you can use the **Simple Web Server** app or the equivalent. Just point it to your project folder and start the server.
+
+### **Option 2: Using Python's Built-in Server**
+If you have Python installed, you can start a quick web server in the project directory:
+
+#### **For Python 3:**
+```bash
+python -m http.server 8000
+```
+#### **For Python 2:**
+```bash
+python -m SimpleHTTPServer 8000
+```
+Then, open `http://localhost:8000` in your browser.
+
+### **Option 3: Using Node.js' http-server**
+If you have Node.js installed, you can install `http-server` and run:
+```bash
+npx http-server
+```
 
 ## Usage
 1. Open `index.html` in your preferred web browser.
