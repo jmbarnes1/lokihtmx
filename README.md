@@ -56,6 +56,15 @@ If you have Node.js installed, you can install `http-server` and run:
 npx http-server
 ```
 
+### **Option 4: Using Caddy server**
+
+https://github.com/caddyserver/caddy
+https://github.com/caddyserver/caddy/releases/tag/v2.9.1
+
+caddy file-server --root .
+
+Now you can open its using https://localhost in the browser, which is required for more advanced Browser features to be possible. 
+
 ## Usage
 1. Open `index.html` in your preferred web browser.
 2. Interact with the dynamic UI elements powered by HTMX and LokiJS.
