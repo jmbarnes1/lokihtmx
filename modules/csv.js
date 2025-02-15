@@ -15,13 +15,13 @@ export function downloadCSV(csvContent, filename) {
 }
 
 
-// Handle exporting filtered data to CSV
+//Handle exporting filtered data to CSV.
 export function handleExportFilteredCSV(filteredData, filename) {
 
-    // Generate CSV content for filtered data
+    //Generate CSV content for filtered data.
     const csvContent = generateCSV(appState.filteredData, appState.fieldsCurrentArray);
 
-    // Trigger download
+    //Trigger the download.
     downloadCSV(csvContent, appState.collectionCurrent + '.csv');
 }
 

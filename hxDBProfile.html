@@ -16,13 +16,40 @@
 <div class="card" id="databaseProfileContainer">
     <div class="card-header fw-bold bg-primary text-white">PROFILE</div>
     <div class="card-body">
-        <label for="databaseNameInput" class="control-label">NAME</label>
-        <input type="text" 
-            name="databaseNameInput" 
-            id="databaseNameInput" 
-            value=""
-            class="form-control"
-            autocomplete="off">
+        <div class="pb-3">
+            <label for="databaseNameInput" class="control-label">NAME</label>
+            <input type="text" 
+                name="databaseNameInput" 
+                id="databaseNameInput" 
+                value=""
+                class="form-control"
+                autofocus
+                autocomplete="off">
+        </div>
+        <div class="pb-3">
+            <div class="form-check">
+                <input type="radio" 
+                    name="databaseType" 
+                    id="databaseType1" 
+                    value="local"
+                    class="form-check-input" 
+                    checked>
+                <label  for="databaseType1" class="form-check-label">
+                    LOCAL STORAGE
+                </label>
+            </div>
+            <div class="form-check">
+                <input type="radio" 
+                    name="databaseType" 
+                    id="databaseType2" 
+                    value="indexeddb"
+                    class="form-check-input">
+                <label for="databaseType2" class="form-check-label">
+                    INDEXEDDB
+                </label>
+            </div>
+        </div>
+
     </div>
     <div class="card-footer">
         <button type="button" 

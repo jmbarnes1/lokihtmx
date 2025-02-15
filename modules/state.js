@@ -1,5 +1,6 @@
 export const appState = {
     databaseCurrent: "",
+    databaseType: "",
     lokiDatabase: [],
     collectionCurrent: "",
     lokiCollection: [],

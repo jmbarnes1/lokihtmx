@@ -55,7 +55,7 @@ document.addEventListener (
     (event) => 
     {
         
-        //Get the action if exists.
+        //Get the action if it exists.
         const actionElement = event.target.closest('[data-action]');
         
         //Route the action if it exists.
@@ -118,7 +118,7 @@ function handleDataSearch(event, element) {
     const results = appState.lokiCollection.find({[searchField]: { [searchOperator] : [searchValue]}});
 
     //Generate the table and add it to the DOM
-    var holdSearch = document.getElementById('holdSearch');
+    let holdSearch = document.getElementById('holdSearch');
 
     //Display the data.
     holdSearch.innerHTML = createTableFromJSON(utils.normalizeDataset(results));

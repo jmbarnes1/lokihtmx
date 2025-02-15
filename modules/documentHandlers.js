@@ -41,18 +41,18 @@ export function handleNewDocument(event, element) {
 
 export function handleUpdateDocument(event, element) {
     
-    // Get the form
+    //Get the form.
     const form = document.querySelector('#updateDocumentForm');
 
-    // Get all field data from the form
-    // returns a FormData object
+    //Get field data for the form.
+    //Returns a FormData object.
     const data = new FormData(form);
     
     const lokiKey = parseInt(data.get("$loki"));
     
     let lokiDoc = appState.lokiCollection.by("$loki", lokiKey);
 
-    var formData = Object.fromEntries
+    let formData = Object.fromEntries
     (
         Array.from
         (
@@ -87,7 +87,7 @@ export function handleSaveNewDocument(event, element) {
     //returns a FormData object
     let newDocumentFormData = new FormData(newDocumentForm);
 
-    var formData = Object.fromEntries
+    let formData = Object.fromEntries
     (
         Array.from
         (
@@ -124,7 +124,7 @@ export function handleEditDocument(event, element) {
         
         updateModalContent.innerHTML = "";
 
-        // Loop through the array and create spans
+        //Loop through the array and create spans.
         appState.fieldsCurrentArray.forEach
         (
             field => 
@@ -152,7 +152,7 @@ export function handleDeleteDocument(event, element) {
 
         appState.lokiCollection.data = appState.lokiCollection.data.filter(document => document["$loki"] != key);
         
-        // Save the new structure
+        //Save the new structure.
         appState.lokiDatabase.saveDatabase();
         
         //Refresh the page.

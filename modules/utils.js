@@ -72,16 +72,16 @@ export function showModal(options)
     const modalBody = document.getElementById('universalModalBody');
     const modalFooter = document.getElementById('universalModalFooter');
 
-    // Set title
+    //Set the title for the modal.
     modalTitle.textContent = options.title || 'Default Title';
 
-    // Set body content
+    //Set body content for the modal.
     modalBody.innerHTML = options.body || '';
 
-    // Clear previous footer buttons
+    //Clear the footer.  Specifically, remove buttons.
     modalFooter.innerHTML = '';
 
-    // Add footer buttons dynamically
+    //Add footer buttons.
     if (options.footerButtons && options.footerButtons.length) 
     {
         options.footerButtons.forEach
@@ -105,8 +105,13 @@ export function showModal(options)
         );
     }
 
-    // Show modal using Bootstrap
+    //Show the modal.
     const modal = new bootstrap.Modal(document.getElementById('universalModal'));
+    
+    if ("callback" in options) {
+        options.callback();
+    }
+
     modal.show();
 }
 
@@ -130,7 +135,7 @@ export function getCollectionStructure(collection)
 //Shows DB or Collection name in menu items.
 export function updatePlaceholders() 
 {
-    // Update database name placeholders
+    //Update database name placeholders.
     [...document.getElementsByClassName("dbName")].forEach
     (
         element => 
@@ -139,7 +144,7 @@ export function updatePlaceholders()
         }
     );
 
-    // Update collection name placeholders
+    //Update collection name placeholders.
     [...document.getElementsByClassName("collectionName")].forEach
     (
         element => 
@@ -172,3 +177,16 @@ export function normalizeDataset (data) {
         }
     );
 };
+
+
+export function saveDatabaseAsync(db) {
+    return new Promise((resolve, reject) => {
+        db.saveDatabase(() => {
+            console.log("Database successfully saved!");
+            resolve();
+        }, (err) => {
+            console.error("Error saving database:", err);
+            reject(err);
+        });
+    });
+}

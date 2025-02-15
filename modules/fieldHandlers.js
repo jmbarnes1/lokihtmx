@@ -1,5 +1,5 @@
 import {appState } from "./state.js";
-import {userConfirm, showModal, focusAndSelectElement, getCollectionStructure } from "./utils.js";
+import {userConfirm, showModal, focusAndSelectElement, getCollectionStructure, saveDatabaseAsync } from "./utils.js";
 import {handleNewDocument } from './documentHandlers.js';
 
 export function handleDeleteField(event, element) {
@@ -28,14 +28,14 @@ export function handleDeleteField(event, element) {
     }
 }
 
+
 export function handleAddField(event, element) {
 
     let fieldName = document.getElementById("fieldName");
-    
+
     if (appState.lokiCollection.data.length === 0)
     {
         appState.lokiCollection.insert({[fieldName.value]:null});
-        appState.lokiDatabase.saveDatabase();
     }
     else
     {
@@ -43,15 +43,20 @@ export function handleAddField(event, element) {
         
         lokiDoc[fieldName.value] = null;
 
-        appState.lokiCollection.update(lokiDoc);
-        appState.lokiDatabase.saveDatabase();
+        appState.lokiCollection.update(lokiDoc); 
     }
 
-    bootstrap.Modal.getInstance(document.getElementById('universalModal')).hide();
+    saveDatabaseAsync(appState.lokiDatabase)
+    .then(() => {
+        console.log("Now loading new content...");
 
-    appState.fieldsCurrentArray = getCollectionStructure(appState.lokiDatabase.getCollection(appState.collectionCurrent));
+        bootstrap.Modal.getInstance(document.getElementById('universalModal')).hide();
 
-    htmx.ajax("GET","hxViewFields.html","#collectionPortalContainer");
+        appState.fieldsCurrentArray = getCollectionStructure(appState.lokiDatabase.getCollection(appState.collectionCurrent));
+
+        htmx.ajax("GET","hxViewFields.html","#collectionPortalContainer");
+    })
+    .catch((err) => console.error("Database save failed:", err));
 }
 
 
@@ -100,20 +105,20 @@ export function handleRenameField(event, element) {
     const oldFieldName = document.getElementById("oldFieldName").value;
     const newFieldName = document.getElementById("newFieldName").value;
     
-    // Iterate through all documents in the collection
+    //Iterate through all documents in the collection.
     appState.lokiCollection.find().forEach
     (
         doc => 
         {
             if (doc.hasOwnProperty(oldFieldName)) 
             {
-                // Copy value from the old field to the new field
+                //Copy value from the old field to the new field.
                 doc[newFieldName] = doc[oldFieldName];
 
-                // Remove the old field
+                //Remove the old field.
                 delete doc[oldFieldName];
 
-                // Update the document in the collection
+                //Update the document in the collection.
                 appState.lokiCollection.update(doc);
             }
         }
@@ -128,6 +133,7 @@ export function handleRenameField(event, element) {
 
     htmx.ajax("GET","hxViewFields.html","#collectionPortalContainer");
 }
+
 
 export function handleAddFieldModal(event, element) {
     showModal
@@ -146,14 +152,21 @@ export function handleAddFieldModal(event, element) {
                             autocomplete="off">
                     </div>
                 </div>`,
-            footerButtons: [
-                {
-                    label: 'SAVE',
-                    class: 'btn btn-primary',
-                    icon: 'bi bi-save',
-                    buttonAction: 'addField'
-                }
-            ]
+            footerButtons: [{
+                label: 'SAVE',
+                class: 'btn btn-primary',
+                icon: 'bi bi-save',
+                buttonAction: 'addField'
+            }],
+            callback: function() {
+
+                setTimeout ( 
+                    () => {
+                        document.getElementById("fieldName").focus();
+                    },
+                    250
+                )
+            }
         }
     );  
 }

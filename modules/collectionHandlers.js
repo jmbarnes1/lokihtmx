@@ -87,19 +87,10 @@ export function handleAddCollection(event, element) {
     if (collectionNameInput.value != "")
     {  
         appState.lokiDatabase.addCollection(collectionNameInput.value);
+  
         appState.lokiDatabase.saveDatabase();
 
         let collectionContainer = document.getElementById("collectionContainer");
-
-        var element = document.createElement("div");
-        element.classList.add("alert");
-        element.classList.add("alert-success");
-        element.classList.add("text-center");
-        element.classList.add("fw-bold");
-        element.innerHTML= "SAVED!";
-
-        collectionContainer.innerHTML = "";
-        collectionContainer.append(element);
 
         //Refresh the page.
         htmx.ajax("GET","hxDBPortal.html","#mainContentContainer");

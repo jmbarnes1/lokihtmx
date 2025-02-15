@@ -7,6 +7,8 @@
   <link href="styles.css" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lokijs/1.5.12/lokijs.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lokijs/1.5.12/loki-indexed-adapter.min.js" defer></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js" defer></script>
   <script src="main.js" type="module" defer></script>
@@ -29,7 +31,8 @@
                     hx-get="hxList.html" 
                     hx-target="#mainContentContainer" 
                     hx-swap="innerHTML" 
-                    hx-trigger="click">
+                    hx-trigger="click"
+                    hx-push-url="index.html">
                     <i class="bi bi-house"></i>
                     HOME
                 </span>
@@ -37,7 +40,7 @@
             </div>
           </div>
 
-           <hr />
+          <hr />
 
           <div id="mainContentContainer" 
             hx-get="hxList.html" 
