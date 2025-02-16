@@ -9,48 +9,28 @@ export function handleSaveDatabase(event, element) {
     if (databaseNameInput.value != "") {
 
         if (databaseType === "local") {
+            
             //Create a new local database and save it.
             let db = new loki (
-                    databaseNameInput.value,
-                    {
-                        persistenceMethod: 'localStorage'
-                    }
-                );
-            
+                databaseNameInput.value,
+                {
+                    persistenceMethod: 'localStorage'
+            });
+
+            db.saveDatabase();
+
         } else if (databaseType === "indexeddb") {
             
             //Create a new indexeddb database and save it.
-            const db = new loki (
-                databaseNameInput.value, { 
-                    adapter: new LokiIndexedAdapter(),
-                    persistenceMethod: "adapter",
-                    autosave: true,
-                    autoload: true,
-                    autosaveInterval: 4000,
-                    throttledSaves: false
-                }
-            );
-
-            db.saveDatabase();
+            //Actually, it will not save if it is only a name.  A collection will have to be added.
+            //This is expected behavior.
 
             //Log the indexed database.
             registerIndexedDBDatabase(databaseNameInput.value);
             
-            db.close();
         }
         
         let databaseProfileContainer = document.getElementById("databaseProfileContainer");
-
-        //Create a div to contain a success message.
-        let element = document.createElement("div");
-        element.classList.add("alert");
-        element.classList.add("alert-success");
-        element.classList.add("text-center");
-        element.classList.add("fw-bold");
-        element.innerHTML= "SAVED!";
-
-        databaseProfileContainer.innerHTML = "";
-        databaseProfileContainer.append(element);
 
         //Refresh the page.
         htmx.ajax("GET","hxList.html","#mainContentContainer");
@@ -61,62 +41,37 @@ export function handleSaveDatabase(event, element) {
 export function handleRenameDatabaseModal(event, element) {
     const databaseName = event.target.dataset.databasetorename;
     
-    showModal
-    (
-        {
-            title: 'RENAME DATABASE',
-            body: `
-                <label for="oldDatabaseName" class="form-label">OLD NAME</label>
-                <div>
-                    <input type="text" 
-                        name="oldDatabaseName" 
-                        id="oldDatabaseName" 
-                        value="${databaseName}"
-                        class="form-control"
-                        readonly>
-                </div>
-                <label for="databaseNameInput" class="form-label">NEW NAME</label>
-                <div>
+    showModal ({
+        title: 'RENAME DATABASE',
+        body: `
+            <label for="oldDatabaseName" class="form-label">OLD NAME</label>
+            <div>
                 <input type="text" 
-                        name="newDatabaseName" 
-                        id="newDatabaseName" 
-                        value="${databaseName}" 
-                        class="form-control" 
-                        autocomplete="off">
-                </div>`,
-            footerButtons: [
-                {
-                    label: 'SAVE',
-                    class: 'btn btn-primary',
-                    icon: 'bi bi-save',
-                    buttonAction: 'renameDatabase'
-                }
-            ]
-        }
-    );
+                    name="oldDatabaseName" 
+                    id="oldDatabaseName" 
+                    value="${databaseName}"
+                    class="form-control"
+                    readonly>
+            </div>
+            <label for="databaseNameInput" class="form-label">NEW NAME</label>
+            <div>
+            <input type="text" 
+                    name="newDatabaseName" 
+                    id="newDatabaseName" 
+                    value="${databaseName}" 
+                    class="form-control" 
+                    autocomplete="off">
+            </div>`,
+        footerButtons: [
+        {
+            label: 'SAVE',
+            class: 'btn btn-primary',
+            icon: 'bi bi-save',
+            buttonAction: 'renameDatabase'
+        }]
+    });
 
     focusAndSelectElement("newDatabaseName", 250);
-}
-
-
-export function handleRenameDatabase(event, element) {
-
-    const newDatabaseName = document.getElementById("newDatabaseName");
-    const oldDatabaseName = document.getElementById("oldDatabaseName");
-    
-    let oldDatabase = JSON.parse(localStorage.getItem(oldDatabaseName.value));
-
-    oldDatabase.filename = newDatabaseName.value;
-
-    localStorage.setItem(newDatabaseName.value, JSON.stringify(oldDatabase));
-    
-    localStorage.removeItem(oldDatabaseName.value);
-
-    //Close the modal.
-    bootstrap.Modal.getInstance(document.getElementById('universalModal')).hide();
-    
-    //Refresh the page.
-    htmx.ajax("GET","hxList.html","#mainContentContainer");    
 }
 
 
@@ -144,20 +99,21 @@ export function handleDeleteDatabase(event, element) {
                 
                 deleteLokiIndexedDBDatabase(dbToDelete)
                     .then(() => {
-                        console.log("Database deleted.")
-                        
-                        //Remove from indexed db list.
-                        let index = lokiIndexedDBList.indexOf(dbToDelete); //Find the index.
-                        if (index !== -1) {
-                            lokiIndexedDBList.splice(index, 1); //Remove the element at index.
-
-                            localStorage.setItem("lokiIndexedDBList", JSON.stringify(lokiIndexedDBList));
-                        }
+                        console.log('IndexedDb delete finished.')  
                     
                     })
                     .catch((err) => console.error("Error:", err));
+
+                //Remove from indexed db list.
+                let index = lokiIndexedDBList.indexOf(dbToDelete); //Find the index.
+                
+                if (index !== -1) {
+                    lokiIndexedDBList.splice(index, 1); //Remove the element at index.
+
+                    localStorage.setItem("lokiIndexedDBList", JSON.stringify(lokiIndexedDBList));
+                }
             }
-            else { console.log('2');
+            else { 
                 localStorage.removeItem(dbToDelete);
             }
 
@@ -220,3 +176,141 @@ function deleteLokiIndexedDBDatabase(dbName) {
         };
     });
 }
+
+
+export async function handleRenameDatabase(event, element) {
+
+    const newDatabaseName = document.getElementById("newDatabaseName").value;
+    const oldDatabaseName = document.getElementById("oldDatabaseName").value;
+
+    //Retrieve the list of indexedDB.
+    const lokiIndexedDBList = JSON.parse(localStorage.getItem("lokiIndexedDBList")) || [];
+
+    //Is the database a local storage database or an indexeddb database?
+    if (lokiIndexedDBList.includes(oldDatabaseName)) {
+
+        console.log('idx')
+        try {
+            await renameIndexedDBDatabase(oldDatabaseName, newDatabaseName);
+
+            const index = lokiIndexedDBList.findIndex(x => x === oldDatabaseName);
+            if (index !== -1) {
+                lokiIndexedDBList[index] = newDatabaseName;
+            }
+            
+            localStorage.setItem("lokiIndexedDBList", JSON.stringify(lokiIndexedDBList));
+
+        } catch (error) {
+            console.error("Failed to rename IndexedDB database:", error);
+            return;
+        }
+
+    }
+    else {
+        console.log('local')
+
+        //Stash the old database.
+        let oldDatabase = JSON.parse(localStorage.getItem(oldDatabaseName));
+
+        //Change the name.
+        oldDatabase.filename = newDatabaseName;
+
+        //Store the newly named database.
+        localStorage.setItem(newDatabaseName, JSON.stringify(oldDatabase));
+        
+        //Remove the old database.
+        localStorage.removeItem(oldDatabaseName);
+    }
+
+    //Close the modal.
+    bootstrap.Modal.getInstance(document.getElementById('universalModal')).hide();
+    
+    //Refresh the page.
+    htmx.ajax("GET","hxList.html","#mainContentContainer");    
+}
+
+
+function renameIndexedDBDatabase(oldName, newName) {
+    return new Promise((resolve, reject) => {
+        let request = indexedDB.open("LokiCatalog");
+
+        request.onsuccess = (event) => {
+            let db = event.target.result;
+
+            if (!db.objectStoreNames.contains("LokiAKV")) {
+                console.error("LokiAKV object store not found.");
+                return reject("LokiAKV object store missing.");
+            }
+
+            let transaction = db.transaction("LokiAKV", "readwrite");
+            let store = transaction.objectStore("LokiAKV");
+            let cursorRequest = store.openCursor();
+
+            cursorRequest.onsuccess = (event) => {
+                let cursor = event.target.result;
+                if (!cursor) {
+                    console.warn(`Database '${oldName}' not found in LokiAKV.`);
+                    return resolve();
+                }
+
+                let record = cursor.value;
+                console.log("record:  ",record);
+
+
+                //Extract the database name.
+                let parsedVal = JSON.parse(record.val);
+                let storedDbName = parsedVal.filename; 
+
+                if (storedDbName === oldName) {
+                    console.log(`Renaming database '${oldName}' to '${newName}'.`);
+
+                    // **Update filename**
+                    parsedVal.filename = newName;
+
+                    // **Update appKey**
+                    if (parsedVal.appKey && parsedVal.appKey.startsWith("loki,")) {
+                        parsedVal.appKey = `loki,${newName}`;
+                    }
+
+                    let newRecord = {
+                        key: newName, // New key
+                        val: JSON.stringify(parsedVal) // Updated value
+                    };
+
+                    // Insert the new record.
+                    let addRequest = store.add(newRecord);
+                    addRequest.onsuccess = () => {
+                        console.log(`New record added with key: ${newName}`);
+
+                        // Delete the old record.
+                        store.delete(cursor.key).onsuccess = () => {
+                            console.log(`Old record '${oldName}' deleted successfully.`);
+                            resolve();
+                        };
+                    };
+
+                    addRequest.onerror = (err) => {
+                        console.error("Error inserting new record:", err);
+                        reject(err);
+                    };
+
+                    return; // Stop iteration after handling rename.
+                }
+
+                // Move to the next record.
+                cursor.continue();
+            };
+
+            cursorRequest.onerror = (err) => {
+                console.error("Error iterating LokiAKV records:", err);
+                reject(err);
+            };
+        };
+
+        request.onerror = (err) => {
+            console.error("Error opening LokiCatalog:", err);
+            reject(err);
+        };
+    });
+}
+
