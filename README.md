@@ -1,6 +1,5 @@
 # LokiHTMX
 
-  
 <img src="https://jmbarnes1.github.io/lokihtmx/lokijs.webp" alt="LokiHTMX" width="200">
 *A lightweight HTMX-based web project powered by LokiJS.*
 
@@ -10,13 +9,20 @@ LokiHTMX is a client-side application that leverages **HTMX** and **LokiJS** to 
 ## Features
 - **HTMX-powered UI updates** – No need for full-page reloads
 - **LokiJS integration** – A fast, in-memory JavaScript database
-- **Persistent Data Storage** – Data is stored in the browser's **localStorage**, ensuring it remains intact across sessions
+- **Persistent Data Storage** – Data can be stored in either **localStorage** or **IndexedDB**, ensuring it remains intact across sessions
 - **Lightweight & efficient** – Minimal external dependencies
 - **Easy to extend** – Customize for various use cases
 - **Offline-first capability (with limitations)** – Data persists offline, but HTMX requests may require a local server
 
 ## Live Demo
 [Check it out here](https://jmbarnes1.github.io/lokihtmx/)
+
+## Storage Options
+LokiHTMX supports two methods for persisting data in the browser:
+- **LocalStorage** – Simple key-value storage that works in all modern browsers.
+- **IndexedDB** – A more advanced, asynchronous database that supports larger datasets and indexing.
+
+You can choose your preferred storage method based on your needs.
 
 ## Installation
 To run LokiHTMX locally:
@@ -34,7 +40,7 @@ Since LokiHTMX is a frontend-only project, there are no additional setup steps b
 ## Running Locally
 To run LokiHTMX on your local machine, you need a simple web server. If you open `index.html` directly (using `file://`), some HTMX features may not work as expected.
 
-### **Option 1: Using Something like Simple Web Server **
+### **Option 1: Using Simple Web Server**
 If you're on Windows, you can use the **Simple Web Server** app or the equivalent. Just point it to your project folder and start the server.
 
 ### **Option 2: Using Python's Built-in Server**
@@ -61,14 +67,15 @@ npx http-server
 https://github.com/caddyserver/caddy
 https://github.com/caddyserver/caddy/releases/tag/v2.9.1
 
+```bash
 caddy file-server --root .
-
-Now you can open its using https://localhost in the browser, which is required for more advanced Browser features to be possible. 
+```
+Now you can open it using https://localhost in the browser, which is required for more advanced browser features to be possible.
 
 ## Usage
 1. Open `index.html` in your preferred web browser.
 2. Interact with the dynamic UI elements powered by HTMX and LokiJS.
-3. Data entered is **persistently stored in localStorage**, so it remains available even after closing and reopening the browser.
+3. Data entered is **persistently stored in either localStorage or IndexedDB**, depending on the chosen storage option.
 4. Modify the project to fit your needs by editing the HTML, JS, or CSS files.
 
 ## Contributing
