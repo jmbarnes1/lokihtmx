@@ -57,8 +57,11 @@ export function handleCollectionPortalSwap () {
     appState.fieldsCurrentArray = utils.getCollectionStructure(appState.lokiDatabase.getCollection(appState.collectionCurrent));
 
     //Organize fields.
-    appState.fieldsCurrentArray.splice(appState.fieldsCurrentArray.indexOf("meta"), 1);
-    appState.fieldsCurrentArray[appState.fieldsCurrentArray.length] = "meta";
+    if (appState.length > 0)
+    {
+        appState.fieldsCurrentArray.splice(appState.fieldsCurrentArray.indexOf("meta"), 1);
+        appState.fieldsCurrentArray[appState.fieldsCurrentArray.length] = "meta";
+    }
 }
 
 
@@ -77,8 +80,7 @@ export function handleViewFieldsSwap() {
                 fieldsListGroup.append(fieldDiv);
             }
         );
-    }
-    else {
+    } else {
         const fieldsListGroup = document.getElementById('fieldsListGroup');
 
         const fieldDiv = document.createElement("div");
@@ -104,6 +106,8 @@ export function handleSearchSwap () {
     if (appState.fieldsCurrentArray.length > 0) {
         const searchListGroup = document.getElementById('searchListGroup');
 
+        searchListGroup.innerHTML= (`<div class="bg-primary fw-bold text-white">FIELDS</div>`);
+
         appState.fieldsCurrentArray.forEach
         (
             field => 
@@ -125,12 +129,6 @@ export function handleSearchSwap () {
                             data-target="searchField"></i>
                         ${field}`;
                 }
-                else
-                {
-                    fieldContainer.innerHTML = `
-                        <i class="bi bi-input-cursor-text"></i>
-                        ${field}`;
-                }
 
                 searchListGroup.append(fieldContainer);
 
@@ -142,8 +140,7 @@ export function handleSearchSwap () {
 
 
 //This adds fields to the list group display.
-function addFieldToListGroup(fieldName)
-{
+function addFieldToListGroup(fieldName) {
     const fieldContainer = document.createElement('div');
     fieldContainer.classList.add("list-group-item");
     
@@ -215,7 +212,6 @@ function buildLocalStorageDatabaseList() {
                 pencilIcon.setAttribute("data-databasetorename", holdJSON.filename);
 
                 wrapper.prepend(pencilIcon, trashIcon, element);
-                //databaseListContainer.append(wrapper);
 
                 localDBList.push(wrapper);
 
@@ -340,7 +336,6 @@ function updateCollectionList() {
                     hx-swap="innerHTML"
                     hx-trigger="click"
                     hx-vals='{"collection":"${collectionName}"}'
-                    hx-push-url="index.html"
                     hx-on::before-request='selectedCollection="${collectionName}"'>
                     <i class="db bi-collection"></i> ${collectionName}
                 </span>`;

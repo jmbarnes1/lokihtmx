@@ -112,10 +112,32 @@ document.body.addEventListener (
 function handleDataSearch(event, element) {
 
     const searchField = document.getElementById("searchField").value;
+    const searchValue = isNaN(document.getElementById("searchValue").value) 
+        ? document.getElementById("searchValue").value 
+        : Number(document.getElementById("searchValue").value);
     const searchOperator = document.getElementById("searchOperator").value;
-    const searchValue = document.getElementById("searchValue").value;
+    const query = { [searchField]: { [searchOperator]: searchValue } };
 
-    const results = appState.lokiCollection.find({[searchField]: { [searchOperator] : [searchValue]}});
+    const results = appState.lokiCollection.find (
+        {
+        '$and': [
+            {
+                [searchField]: { [searchOperator] : searchValue}
+            },
+            {
+                $loki: { $ne: 1 }
+            }
+        ]});
+
+    console.log();
+    console.log("========================================");
+    console.log("searchField:  ",searchField, " (Type: " + typeof searchField + ")");
+    console.log("searchValue:  ",searchValue, " (Type: " + typeof searchValue + ")");
+    console.log("searchOperator:  ",searchOperator, " (Type: " + typeof searchOperator + ")");
+    console.log("query:  ",JSON.stringify(query));
+    console.log("results:  ",results);
+    console.log("========================================");
+    console.log();
 
     //Generate the table and add it to the DOM
     let holdSearch = document.getElementById('holdSearch');
